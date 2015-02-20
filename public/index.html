@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html ng-app="unifier">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Soup Unifier</title>
+
+    <!-- SCROLLS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
+    <style>
+        html                    { overflow-y:scroll; }
+        body                    { padding-top:50px; }
+        #todo-list              { margin-bottom:30px; }
+        #imgcontainer {
+            width: 100%;
+            margin: 1em auto;
+        }
+        .cols {
+            -moz-column-count:3;
+            -moz-column-gap: 3%;
+            -moz-column-width: 30%;
+            -webkit-column-count:3;
+            -webkit-column-gap: 3%;
+            -webkit-column-width: 30%;
+            column-count: 3;
+            column-gap: 3%;
+            column-width: 30%;
+        }
+        img {
+            display:block;
+            margin:0;
+            padding:0;
+            border:none;
+            float:left;
+        }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <script src="core.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="mainController">
+    <div class="container">
+
+        <!-- HEADER AND TODO COUNT -->
+        <div class="jumbotron text-center">
+            <h1>Soup Unifier</h1>
+        </div>
+
+        <div id="todo-list" class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <div class="checkbox" ng-repeat="soup in soups">
+                    <label>
+                        <input type="checkbox" ng-click="deleteSoup($index)"> {{ soup.url }}
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div id="todo-form" class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control input-lg text-center" placeholder="A URL of a soup you want to observe" ng-model="formData.text">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createSoup()">Add</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="imgcontainer" class="row">
+            <div class="cols">
+                <img ng-repeat="image in images" src="{{image.uri}}"/>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+

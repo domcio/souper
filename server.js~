@@ -1,0 +1,122 @@
+
+    // set up ========================
+    var express  = require('express');
+    var app      = express();                               // create our app w/ express
+    var mongoose = require('mongoose');                     // mongoose for mongodb
+    var morgan = require('morgan');             // log requests to the console (express4)
+    var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
+    var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
+
+    var Crawler = require("crawler");
+
+var c = new Crawler({
+    "maxConnections":5,
+    "onDrain" : callForEnding
+});
+
+var callForEnding = function() {
+    console.log("End of work !!!");
+    setTimeout(function(){
+            process.exit(0);
+    },1000);
+};
+
+    // configuration =================
+
+    mongoose.connect('mongodb://uni:uni@proximus.modulusmongo.net:27017/Ra6notaw');     // connect to mongoDB database on modulus.io
+
+    app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
+    app.use(morgan('dev'));                                         // log every request to the console
+    app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
+    app.use(bodyParser.json());                                     // parse application/json
+    app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+    app.use(methodOverride());
+
+    // listen (start app with node server.js) ======================================
+    app.listen(8080);
+    console.log("App listening on port 8080");
+
+    // define model =================
+  
+  var Image = mongoose.model('Image', {
+        uri : String
+    });
+
+  var Soup = mongoose.model('Soup', {
+	url: String
+    });
+
+// routes ======================================================================
+
+    // api ---------------------------------------------------------------------
+    // get all soups
+    app.get('/api/soups', function(req, res) {
+
+        // use mongoose to get all todos in the database
+        Soup.find(function(err, soups) {
+
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err)
+
+            res.json(soups); // return all todos in JSON format
+        });
+    });
+
+    // create soup and send back all soups after creation
+    app.post('/api/soups', function(req, res) {
+
+        // create a todo, information comes from AJAX request from Angular
+        Soup.create({
+            url : req.body.text
+        }, function(err, todo) {
+            if (err)
+                res.send(err);
+
+            // get and return all the todos after you create another
+            Soup.find(function(err, soups) {
+                if (err)
+                    res.send(err)
+                res.json(soups);
+            });
+        });
+
+    });
+
+    // get all images
+    app.get('/api/images', function(req, res) {
+
+        // use mongoose to get all todos in the database
+        Soup.find(function(err, soups) {
+
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err)
+
+	    soups.each(function(soup) {
+		c.queue([
+   		 {
+        "uri" : soup.url,
+        "callback" : function(error,result,$) {
+            // $ is a jQuery instance scoped to the server-side DOM of the page
+            $("div.imagecontainer > img").each(function (index, a) {
+                   Image.create({uri : a.attribs.src});
+            });
+
+	  
+        }
+    }
+]);
+
+            res.json([]); // return all todos in JSON format
+        });
+    });
+
+
+    // application -------------------------------------------------------------
+    app.get('*', function(req, res) {
+        res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+    });
+
+
+

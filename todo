@@ -1,0 +1,5 @@
+- provide dynamic loading of content
+- give choice as to how far back to go on a new soup
+- fix jquery not catching every post
+- provide a better look: fonts, mosaic (fix image overlapping :()
+- add support for full posts, not just images/gifs

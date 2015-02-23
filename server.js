@@ -105,7 +105,6 @@
 
             //crawl for new content
             soups.map(function (soup) {
-
                 var crawler = new Crawler({
                     "maxConnections":5
                 });
@@ -136,32 +135,14 @@
         }); 
     });
 
-    app.get('/api/crawl/:soupId', function(req, res) {
-        Soup.findOne({ _id: req.params.soupId }, function(err, soup) {
-            var d = new Crawler({
-                "maxConnections": 5,
-                "onDrain": function() {
-                    Image.update({ seen: false }, { seen: true }, { multi: true }, function (err, numberAffected, raw) {
-                        if (err) console.log("Error on 'seeing'");
-                        console.log('%d posts seen', numberAffected);
-                    });
-                    console.log("Calling res end");
-                    res.end();
-                }
-            });
-            d.queue([
-                {
-                    "uri" : soup.url,
-                    "callback" : crawlSoup(d, soup.url, 1, soup.lastPost, res)
-                }]);
-            d.queue([{
-                "uri" : soup.url,
-                "callback" : updateLastPost(soup)
-            }]);
-        })
+    app.get('/soups/clear', function(req, res) {
+        Soup.update({}, { lastPost : ""}, { multi: true } , function (err, number, raw) {
+            if (err) console.log("Error reseting soups");
+            console.log("%d soups cleared", number);
+            res.end();
+        });
     });
     
-
     function crawlSoup(crawler, soup, left, lastPost, res) {
         return function(error, result, $) {
             console.log("Checking soup: " + soup);
@@ -178,8 +159,8 @@
                             console.log("Error finding image");
                         if (!image)
                             Image.create({uri : a.attribs.src, seen : false}, function(err, image) {
-                                if (res)    
-                                res.write(JSON.stringify(image));
+                                //if (res)    
+                                //res.write(JSON.stringify(image));
                             });
                     });
                 }
@@ -189,7 +170,7 @@
                     console.log("Found next page: " + a.attribs.href);
                     crawler.queue([{
                         "uri" : soup + a.attribs.href,
-                        "callback" : crawlSoup(soup, left-1, lastPost, res)
+                        "callback" : crawlSoup(crawler, soup, left - 1, lastPost, res)
                     }]);
                 }
             });

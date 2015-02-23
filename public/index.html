@@ -26,6 +26,8 @@
             column-gap: 3%;
             column-width: 30%;
         }
+        .item { width: 30%; }
+        .item.w2 { width: 50%; }
         img {
             display:block;
             margin:0;
@@ -38,6 +40,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
     <script src="core.js"></script>
+    <script src="../masonry.pkgd.min.js"></script>
 
 </head>
 <body ng-controller="mainController">
@@ -68,10 +71,14 @@
             </div>
         </div>
 
-        <div id="imgcontainer" class="row">
+<!--         <div id="imgcontainer" class="row">
             <div class="cols">
                 <img ng-repeat="image in images" src="{{image.uri}}"/>
             </div>
+        </div>
+ -->
+        <div id="imgcontainer" class="container" data-masonry-options='{ "columnWidth": 300, "itemSelector": ".item" }'>
+            <img ng-repeat="image in images" src="{{image.uri}}" class="item"/>
         </div>
 
     </div>

@@ -158,10 +158,7 @@
                         if (err)
                             console.log("Error finding image");
                         if (!image)
-                            Image.create({uri : a.attribs.src, seen : false}, function(err, image) {
-                                //if (res)    
-                                //res.write(JSON.stringify(image));
-                            });
+                            Image.create({uri : a.attribs.src, seen : false}, function(err, image) {});
                     });
                 }
             });

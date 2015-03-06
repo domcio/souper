@@ -65,9 +65,8 @@
 	<div class="well">
         <ul id="soup-list" class="list-inline">
 		<li ng-repeat="soup in soups" >
-		    <a href="{{soup.url}}">{{soup.url}}</a>
-		    <button type="button" class="btn btn-default btn-sm" ng-click="deleteSoup($index)">
-			<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>Remove
+		    <button type="button" class="btn btn-default btn-lg" ng-click="deleteSoup($index)">
+			<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>{{" " + getName(soup.url)}}
 		    </button>
 		</li>
         </ul>

@@ -41,6 +41,11 @@ unifier.controller("mainController", function ($scope, $http) {
 	 }).error(function(error) { console.log("Success clearing the soups"); });
     }
 
+    $scope.getName = function(url) {
+	var str = url.substring(7, url.indexOf('.soup'));
+	return str;
+    }
+
     $scope.deleteSoup = function (id) {
         var sid = $scope.soups[id]._id;
         $scope.soups.splice(id, 1);

@@ -82,9 +82,11 @@
         </div>
 
         <div id="imgcontainer" class="container" data-masonry-options='{ "columnWidth": 300, "itemSelector": ".item" }'>
-            <img ng-repeat="image in images" src="{{image.uri}}" />
+		<ol ng-show="!images.length" class="breadcrumb">
+			<li>There's nothing new here... Go do something productive.</li>
+		</ol>
+		<img ng-repeat="image in images" src="{{image.uri}}" />
         </div>
-
     </div>
 </body>
 </html>

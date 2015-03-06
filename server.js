@@ -79,11 +79,11 @@
     app.delete('/api/soups/:soup_id', function(req, res) {
         Soup.remove({
             _id : req.params.soup_id
-        }, function(err, todo) {
+        }, function(err, soup) {
             if (err)
                 res.send(err);
 
-            // get and return all the todos after you create another
+            // get and return all the soups after you create another
             Soup.find(function(err, soups) {
                 if (err)
                     res.send(err)
@@ -139,7 +139,10 @@
         Soup.update({}, { lastPost : ""}, { multi: true } , function (err, number, raw) {
             if (err) console.log("Error reseting soups");
             console.log("%d soups cleared", number);
-            res.end();
+	    Image.find({}).remove(function (err, number, raw) {
+		console.log("Removed %d images", number);
+		res.end();
+	    });
         });
     });
     

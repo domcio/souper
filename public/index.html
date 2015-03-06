@@ -4,13 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Soup Unifier</title>
+    <title>Souper <3</title>
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <style>
         html                    { overflow-y:scroll; }
         body                    { padding-top:50px; }
-        #todo-list              { margin-bottom:30px; }
         #imgcontainer {
             width: 100%;
             margin: 1em auto;
@@ -42,47 +41,51 @@
     <script src="core.js"></script>
     <script src="../masonry.pkgd.min.js"></script>
 
+	<script>$(function() {
+    $('#resetBtn').tooltip();
+});</script>
+
 </head>
 <body ng-controller="mainController">
     <div class="container">
 
-        <div class="jumbotron text-center">
-            <h1>Soup Unifier</h1>
+	<div class="page-header">
+           <h1>Souper <small> No more pointless scrolling, no more reposts!</small></h1>
         </div>
 
-        <div id="soup-list" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-                <div class="checkbox" ng-repeat="soup in soups">
-                    <label>
-                        <input type="checkbox" ng-click="deleteSoup($index)"> {{ soup.url }}
-                    </label>
-                </div>
-            </div>
-        </div>
+	<h2>Your soups</h2>
+		
+	<div class="well">
+        <ul id="soup-list" class="list-inline">
+		<li ng-repeat="soup in soups" >
+		    <a href="{{soup.url}}">{{soup.url}}</a>
+		    <button type="button" class="btn btn-default btn-sm" ng-click="deleteSoup($index)">
+			<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>Remove
+		    </button>
+		</li>
+        </ul>
+	</div>
 
         <div id="form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
+            <div class="col-sm-8 col-sm-offset-0 text-left">
                 <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control input-lg text-center" placeholder="A URL of a soup you want to observe" ng-model="formData.text">
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createSoup()">Add</button>
+                    <div class="input-group">
+                        <input type="text" class="form-control input-lg text-left" placeholder="Any other soups on your mind?" ng-model="formData.text"> 
+			<span class="input-group-btn">                        
+			    <button id="addBtn" type="submit" class="btn btn-primary btn-lg" ng-click="createSoup()">Add</button>
+			    <button id="resetBtn" type="submit" class="btn btn-primary btn-lg" ng-click="clearSoups()" 
+				title="This will make Souper forget where you ended on all soups and what images you have seen.">Clear history</button>
+			</span>
+		    </div>
                 </form>
             </div>
         </div>
 
-<!--         <div id="imgcontainer" class="row">
-            <div class="cols">
-                <img ng-repeat="image in images" src="{{image.uri}}"/>
-            </div>
-        </div>
- -->
         <div id="imgcontainer" class="container" data-masonry-options='{ "columnWidth": 300, "itemSelector": ".item" }'>
-            <img ng-repeat="image in images" src="{{image.uri}}" class="item"/>
+            <img ng-repeat="image in images" src="{{image.uri}}" />
         </div>
 
     </div>
-
 </body>
 </html>
 

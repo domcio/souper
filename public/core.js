@@ -1,6 +1,6 @@
 var unifier = angular.module('unifier', []);
 
-function mainController($scope, $http) {
+unifier.controller("mainController", function ($scope, $http) {
     $scope.formData = {};
 
     $http.get('/api/soups')
@@ -33,6 +33,14 @@ function mainController($scope, $http) {
             });
     };
 
+    $scope.clearSoups = function() {
+	$http.get('/soups/clear')
+	   .success(function(data) { 
+		$scope.images = []; 
+		console.log("Success clearing the soups");
+	 }).error(function(error) { console.log("Success clearing the soups"); });
+    }
+
     $scope.deleteSoup = function (id) {
         var sid = $scope.soups[id]._id;
         $scope.soups.splice(id, 1);
@@ -41,20 +49,10 @@ function mainController($scope, $http) {
         }).error(function(data) { console.log ('Error: ' + data); })
     }
 
-    $scope.update = function() {
-        $scope.images = new Array();
-        $scope.soups.map(function(soup) {
-            $http.get('/api/crawl/' + soup._id).success(function(data) {
-                console.log("New data: " + data);
-                $scope.images = $scope.images.concat(data);
-            }).error(function(data) { console.log('Errrorrorr'); });
-        });
-    }
-
     $scope.deleteImage = function(id) {
         $http.delete('api/images/' + id).success(function(data) {
             console.log("Succesfully deleted image: " + id);
         }).error(function(data) { console.log ('Error: ' + data); })
     }
-}
+});
 

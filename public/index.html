@@ -34,6 +34,11 @@
             border:none;
             float:left;
         }
+	.masthead {
+	    height:200px;
+	    background-image:url("resources/souper3.png");
+	    background-repeat:no-repeat;
+	}
     </style>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -48,14 +53,14 @@
 </head>
 <body ng-controller="mainController">
 	<div class="container">
-	<img src="resources/souper3.png" style="float:left"/>    
+	<img style="float: left; margin: 0px 15px 15px 0px;" src="resources/souper3.png" align="top"/>  
 	
 	
 	<div class="page-header">
-           <h1><small> No more pointless scrolling, no more reposts!</small></h1>
+           <h1><small> <br/> No more pointless scrolling, no more reposts!</small></h1>
         </div>
-
-	<h2>Your soups</h2>
+	
+	<h2 style="clear: both;">Your soups:</h2>
 		
 	<div class="well">
         <ul id="soup-list" class="list-inline">

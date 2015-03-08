@@ -34,16 +34,16 @@ unifier.controller("mainController", function ($scope, $http) {
     };
 
     $scope.clearSoups = function() {
-	$http.get('/soups/clear')
-	   .success(function(data) { 
-		$scope.images = []; 
-		console.log("Success clearing the soups");
-	 }).error(function(error) { console.log("Success clearing the soups"); });
+	   $http.get('/soups/clear')
+	       .success(function(data) { 
+                $scope.images = []; 
+                console.log("Success clearing the soups");
+            }).error(function(error) { console.log("Success clearing the soups"); });
     }
 
     $scope.getName = function(url) {
-	var str = url.substring(7, url.indexOf('.soup'));
-	return str;
+	   var str = url.substring(7, url.indexOf('.soup'));
+	   return str;
     }
 
     $scope.deleteSoup = function (id) {

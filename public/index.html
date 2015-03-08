@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Souper <3</title>
+    <title>Souper - all your soups in one place</title>
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     <style>
@@ -34,64 +34,67 @@
             border:none;
             float:left;
         }
-	.masthead {
-	    height:200px;
-	    background-image:url("resources/souper3.png");
-	    background-repeat:no-repeat;
-	}
+    	.masthead {
+    	    height:200px;
+    	    background-image:url("resources/souper3.png");
+    	    background-repeat:no-repeat;
+	   }
     </style>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
     <script src="core.js"></script>
     <script src="../masonry.pkgd.min.js"></script>
-
-	<script>$(function() {
-    $('#resetBtn').tooltip();
-});</script>
+	<script>
+        $(function() {
+            $('#resetBtn').tooltip();
+        });
+    </script>
 
 </head>
 <body ng-controller="mainController">
 	<div class="container">
-	<img style="float: left; margin: 0px 15px 15px 0px;" src="resources/souper3.png" align="top"/>  
-	
-	
-	<div class="page-header">
+    	<img style="float: left; margin: 0px 15px 15px 0px;" src="resources/souper3.png" align="top"/>  
+    	
+    	<div class="page-header">
            <h1><small> <br/> No more pointless scrolling, no more reposts!</small></h1>
         </div>
-	
-	<h2 style="clear: both;">Your soups:</h2>
-		
-	<div class="well">
-        <ul id="soup-list" class="list-inline">
-		<li ng-repeat="soup in soups" >
-		    <button type="button" class="btn btn-default btn-lg" ng-click="deleteSoup($index)" style="margin-bottom: 10px;">
-			<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>{{" " + getName(soup.url)}}
-		    </button>
-		</li>
-        </ul>
-	</div>
+    	
+    	<h2 style="clear: both;">Your soups:</h2>
+    		
+    	<div class="well">
+            <ul id="soup-list" class="list-inline">
+    		<li ng-repeat="soup in soups" >
+    		    <button type="button" class="btn btn-default btn-lg" ng-click="deleteSoup($index)" style="margin-bottom: 10px;">
+    			<span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>{{" " + getName(soup.url)}}
+    		    </button>
+    		</li>
+            </ul>
+    	</div>
 
         <div id="form" class="row">
             <div class="col-sm-8 col-sm-offset-0 text-left">
                 <form>
                     <div class="input-group">
-                        <input type="text" class="form-control input-lg text-left" placeholder="Any other soups on your mind?" ng-model="formData.text"> 
-			<span class="input-group-btn">                        
-			    <button id="addBtn" type="submit" class="btn btn-primary btn-lg" ng-click="createSoup()">Add</button>
-			    <button id="resetBtn" type="submit" class="btn btn-primary btn-lg" ng-click="clearSoups()" 
-				title="This will make Souper forget where you ended on all soups and what images you have seen.">Clear history</button>
-			</span>
-		    </div>
+                        <input type="text" class="form-control input-lg text-left" placeholder="Any other soups on your mind?" ng-model="formData.text"/> 
+                        <span class="input-group-btn">                        
+                            <button id="addBtn" type="submit" class="btn btn-primary btn-lg" ng-click="createSoup()">
+                                Add
+                            </button>
+                            <button id="resetBtn" type="submit" class="btn btn-primary btn-lg" ng-click="clearSoups()"  title="This will make Souper forget where you ended on all soups and what images you have seen.">
+                                Clear history
+                            </button>
+                        </span>
+                    </div>
                 </form>
             </div>
         </div>
 
         <div id="imgcontainer" class="container" data-masonry-options='{ "columnWidth": 300, "itemSelector": ".item" }'>
-		<ol ng-show="!images.length" class="breadcrumb">
-			<li>There's nothing new here... Go do something productive.</li>
-		</ol>
-		<img ng-repeat="image in images" src="{{image.uri}}" />
+    		<ol ng-show="!images.length" class="breadcrumb">
+    			<li>There's nothing new here... Go do something productive.</li>
+    		</ol>
+    		<img ng-repeat="image in images" src="{{image.uri}}"/>
         </div>
     </div>
 </body>
